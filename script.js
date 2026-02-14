@@ -11,11 +11,8 @@ function moveNoButton() {
   const maxX = Math.max(0, areaRect.width - btnRect.width);
   const maxY = Math.max(0, areaRect.height - btnRect.height);
 
-  const nextX = Math.random() * maxX;
-  const nextY = Math.random() * maxY;
-
-  noBtn.style.left = `${nextX}px`;
-  noBtn.style.top = `${nextY}px`;
+  noBtn.style.left = `${Math.random() * maxX}px`;
+  noBtn.style.top = `${Math.random() * maxY}px`;
 }
 
 ['mouseenter', 'click', 'touchstart'].forEach((eventName) => {
@@ -25,18 +22,23 @@ function moveNoButton() {
   });
 });
 
+let evadeInterval;
+
+function startConstantEvade() {
+  clearInterval(evadeInterval);
+  evadeInterval = setInterval(moveNoButton, 550);
+}
+
 yesBtn.addEventListener('click', () => {
   response.hidden = false;
-  subtitle.textContent = 'You picked Yes! My heart is doing happy dances 💃🕺';
-  yesBtn.textContent = 'Yes!!! 💖';
+  subtitle.textContent = 'Hehe best choice, my love 💘';
+  yesBtn.textContent = 'Me, your hubby! 💞';
   noBtn.hidden = true;
-
-  for (let i = 0; i < 6; i += 1) {
-    setTimeout(() => {
-      moveNoButton();
-    }, i * 120);
-  }
+  clearInterval(evadeInterval);
 });
 
-window.addEventListener('load', moveNoButton);
+window.addEventListener('load', () => {
+  moveNoButton();
+  startConstantEvade();
+});
 window.addEventListener('resize', moveNoButton);
